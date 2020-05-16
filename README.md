@@ -1,2 +1,2 @@
-# menu-api
+# Menu API
 Menu API
