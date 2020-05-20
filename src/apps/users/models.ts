@@ -21,13 +21,12 @@ export const userSchema = new Schema({
   isEmailVerified: { type: Boolean, default: false, required: true },
 }, { timestamps: true })
 
-userSchema.pre<IUser>('save', async function(next) {
+userSchema.pre<IUser>('save', async function() {
   if (this.isModified('password')) {
     const encrypted: string = await encrypt(this.password)
-    if (!encrypted) return next(new Error('Hashing password'))
+    if (!encrypted) return new Error('Hashing password')
     this.password = encrypted
   }
-  next()
 })
 
 const User: Model<IUser> = model<IUser>('User', userSchema)

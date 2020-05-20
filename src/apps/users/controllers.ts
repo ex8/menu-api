@@ -1,9 +1,9 @@
 import { Context } from 'koa'
-import { DaoFactory } from '../../dao/DaoFactory'
+import DaoFactory from '../../dao/DaoFactory'
 import { IUser } from './interfaces'
 
 export async function createUser(ctx: Context): Promise<void> {
-  const { email } = ctx.request.body as IUser
+  const { email }: IUser = ctx.request.body
   const dao = DaoFactory.getUserDao()
 
   const exists: IUser = await dao.findOne(ctx, { email })
@@ -39,7 +39,6 @@ export async function fetchUserDashboard(ctx: Context): Promise<void> {
 
 export async function fetchUserOrders(ctx: Context): Promise<void> {
   return ctx.throw(400, { success: false, message: 'Method not implemented yet.' })
-
 }
 
 export async function fetchUserReceipts(ctx: Context): Promise<void> {

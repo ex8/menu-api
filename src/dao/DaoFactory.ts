@@ -1,6 +1,6 @@
 import { UserDao } from '../apps/users'
 
-export class DaoFactory {
+export default class DaoFactory {
   static getUserDao(): UserDao {
     return new UserDao()
   }

@@ -7,7 +7,8 @@
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc",
     "lint": "tslint src/**/*.ts",
-    "start": "node dist/server/main.js"
+    "start": "node dist/server/main.js",
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
-      "pre-push": "npm run build"
+      "pre-push": "npm run build && npm run test"
     }
   },
   "keywords": [],
@@ -26,7 +27,15 @@
     "url": "https://github.com/ex8/menu-api/issues"
   },
   "homepage": "https://github.com/ex8/menu-api#readme",
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "dist"
+    ]
+  },
   "devDependencies": {
+    "@shopify/jest-koa-mocks": "^2.2.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^25.1.4",
     "@types/koa": "^2.11.2",
@@ -39,6 +48,8 @@
     "@types/passport-jwt": "^3.0.3",
     "@types/validator": "^12.0.1",
     "husky": "^4.2.3",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.0.0",
     "tslint": "^6.0.0",
     "typescript": "^3.8.3"
   },

@@ -14,13 +14,13 @@ export class UserDao extends BaseDao<IUser> {
   }
 
   public async create(ctx: Context): Promise<IUser> {
-    const { firstName, lastName, email, phone, password } = ctx.request.body as IUser
+    const { firstName, lastName, email, phone, password }: IUser = ctx.request.body
     return User.create({ firstName, lastName, email, phone, password })
   }
 
   public async update(ctx: Context): Promise<IUser> {
     const { id } = ctx.state.user
-    const { firstName, lastName, phone } = ctx.request.body as IUser
+    const { firstName, lastName, phone }: IUser = ctx.request.body
     return User.findByIdAndUpdate(id, { firstName, lastName, phone }, { new: true })
   }
 }
