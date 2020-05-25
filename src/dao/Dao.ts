@@ -1,7 +1,7 @@
 import { Context } from 'koa'
 import { FilterQuery } from 'mongoose'
 
-export abstract class BaseDao<T> {
+export abstract class Dao<T> {
   abstract async find(ctx: Context, query?: FilterQuery<T>): Promise<T[]>
   abstract async findOne(ctx: Context, query?: FilterQuery<T>): Promise<T>
   abstract async create(ctx: Context): Promise<T>

@@ -1,10 +1,10 @@
 import { Context } from 'koa'
 import { FilterQuery } from 'mongoose'
 import { IUser } from './interfaces'
-import { BaseDao } from '../../dao/BaseDao'
+import { Dao } from '../../dao/Dao'
 import { User } from './models'
 
-export class UserDao extends BaseDao<IUser> {
+export class UserDao extends Dao<IUser> {
   public async find(ctx: Context, query?: FilterQuery<IUser>): Promise<IUser[]> {
     return User.find(query)
   }

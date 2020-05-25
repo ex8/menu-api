@@ -19,7 +19,7 @@ userRouter
   .get('/account', isAuthenticated('user'), fetchUserDashboard)
   .get('/account/orders', isAuthenticated('user'), fetchUserOrders)
   .get('/account/receipts', isAuthenticated('user'), fetchUserReceipts)
-  .post('/account/check-email', checkUserEmail)
-  .post('/account/check-password', checkUserPassword)
+  .post('/account/check/email', checkUserEmail)
+  .post('/account/check/password', checkUserPassword)
 
 export { userRouter }
