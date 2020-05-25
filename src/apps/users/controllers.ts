@@ -1,6 +1,8 @@
 import { Context } from 'koa'
+import { compare } from 'bcryptjs'
 import DaoFactory from '../../dao/DaoFactory'
 import { IUser } from './interfaces'
+import { generateToken } from '../../util/token'
 
 export async function createUser(ctx: Context): Promise<void> {
   const { email }: IUser = ctx.request.body
@@ -12,7 +14,6 @@ export async function createUser(ctx: Context): Promise<void> {
   }
 
   // TODO: check if new user email exists in chef accounts...
-  // here...
 
   const user: IUser = await dao.create(ctx)
 
@@ -29,8 +30,32 @@ export async function updateUser(ctx: Context): Promise<void> {
   ctx.body = { success: true, user }
 }
 
-export async function loginUser(ctx: Context): Promise<void> {
-  return ctx.throw(400, { success: false, message: 'Method not implemented yet.' })
+export async function checkUserEmail(ctx: Context): Promise<void> {
+  const { email }: IUser = ctx.request.body
+  const user: IUser = await DaoFactory.getUserDao().findOne(ctx, { email })
+  if (!user) {
+    return ctx.throw(400, { success: false, message: 'Incorrect email. Please try again.' })
+  }
+  ctx.status = 200
+  ctx.body = { success: true }
+}
+
+export async function checkUserPassword(ctx: Context): Promise<void> {
+  const { email, password }: IUser = ctx.request.body
+  const user: IUser = await DaoFactory.getUserDao().findOne(ctx, { email })
+  if (!user) {
+    return ctx.throw(400, { success: false, message: 'User not found.' })
+  }
+
+  const isMatch: boolean = await compare(password, user.password)
+  if (isMatch) {
+    const token: string = generateToken({ id: user.id })
+    ctx.status = 200
+    ctx.body = { success: true, token }
+  } else {
+    // TODO: send email to user about invalid password attempt
+    return ctx.throw(400, { success: false, message: 'Incorrect password. Please try again.' })
+  }
 }
 
 export async function fetchUserDashboard(ctx: Context): Promise<void> {

@@ -4,28 +4,31 @@ import { User } from '../models'
 import { IUser } from '../interfaces'
 import { UserDao } from '../dao'
 
-describe('User DAO', () => {
-  test('should find and fetch users', async () => {
+describe('User Dao', () => {
+  const sample: IUser[] = [new User(), new User()]
+
+  test('should find Users', async () => {
     const ctx: Context = createMockContext()
-    const mockFind = jest.spyOn(User, 'find').mockResolvedValueOnce([])
+    const mockFind = jest.spyOn(User, 'find').mockResolvedValueOnce(sample)
 
     const users: IUser[] = await new UserDao().find(ctx)
 
     expect(mockFind).toHaveBeenCalledTimes(1)
-    expect(users).toEqual([])
+    expect(users.length).toBe(2)
+    expect(users).toEqual(sample)
   })
 
-  test('should find and fetch one user', async () => {
+  test('should find one User', async () => {
     const ctx: Context = createMockContext()
-    const mockFindOne = jest.spyOn(User, 'findOne').mockResolvedValueOnce(null)
+    const mockFindOne = jest.spyOn(User, 'findOne').mockResolvedValueOnce(sample[0])
 
     const user: IUser = await new UserDao().findOne(ctx)
 
     expect(mockFindOne).toHaveBeenCalledTimes(1)
-    expect(user).toEqual(null)
+    expect(user).toEqual(sample[0])
   })
 
-  test('should create user', async () => {
+  test('should create User', async () => {
     const ctx: Context = createMockContext({
       requestBody: {
         firstName: 'firstName',
@@ -35,15 +38,15 @@ describe('User DAO', () => {
         password: 'password',
       }
     })
-    const mockCreate = jest.spyOn(User, 'create').mockResolvedValueOnce(null)
+    const mockCreate = jest.spyOn(User, 'create').mockResolvedValueOnce(sample[0])
 
     const user: IUser = await new UserDao().create(ctx)
 
     expect(mockCreate).toHaveBeenCalledTimes(1)
-    expect(user).toEqual(null)
+    expect(user).toEqual(sample[0])
   })
 
-  test('should find and update user', async () => {
+  test('should update User', async () => {
     const ctx: Context = createMockContext({
       requestBody: {
         firstName: 'firstName',
@@ -56,7 +59,7 @@ describe('User DAO', () => {
         }
       }
     })
-    const mockUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockResolvedValueOnce(null)
+    const mockUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockResolvedValueOnce(sample[0])
 
     const user: IUser = await new UserDao().update(ctx)
 
@@ -66,6 +69,6 @@ describe('User DAO', () => {
       lastName: 'lastName',
       phone: '(405) 390-6591',
     }, { new: true })
-    expect(user).toEqual(null)
+    expect(user).toHaveProperty('_id')
   })
 })

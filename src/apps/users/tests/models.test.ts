@@ -5,7 +5,7 @@ import { Error } from 'mongoose'
 import * as encrypt from '../../../util/encrypt'
 
 describe('User Models', () => {
-  setupTestDb('users-test')
+  setupTestDb('jest-users')
 
   test('should create basic User', async () => {
     const user: IUser = await User.create({
@@ -29,7 +29,7 @@ describe('User Models', () => {
   test('should encrypt user password on pre-save', async () => {
     const mockEncrypt = jest.spyOn(encrypt, 'encrypt')
 
-    await User.create({
+    const user: IUser = await User.create({
       firstName: 'some-first-name',
       lastName: 'some-last-name',
       email: 'some@email.com',
@@ -39,6 +39,7 @@ describe('User Models', () => {
 
     expect(mockEncrypt).toHaveBeenCalledTimes(1)
     expect(mockEncrypt).toHaveBeenCalledWith('some-password')
+    expect(user.password).not.toBe('some-password')
   })
 
   test('should fail to create User with invalid e-mail', async () => {

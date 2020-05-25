@@ -1,5 +1,5 @@
 describe('User Controllers', () => {
-  test('should', async () => {
+  test('should check User email', async () => {
     expect(true).toBeTruthy()
   })
 })
