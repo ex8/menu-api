@@ -1,7 +1,7 @@
 import { Context } from 'koa'
 import { FilterQuery } from 'mongoose'
 import { IUser } from './interfaces'
-import { Dao } from '../../dao/Dao'
+import { Dao } from '../../dao/dao'
 import { User } from './models'
 
 export class UserDao extends Dao<IUser> {
