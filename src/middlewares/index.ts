@@ -6,7 +6,7 @@ import helmet from 'koa-helmet'
 import cors from '@koa/cors'
 import bodyParser from 'koa-body'
 import error from './error'
-import passport from './passport'
+import auth from './auth'
 
 export default function middlewares(): Middleware {
   return compose([
@@ -15,6 +15,6 @@ export default function middlewares(): Middleware {
     cors(),
     error(),
     bodyParser(),
-    passport(),
+    auth(),
   ])
 }
