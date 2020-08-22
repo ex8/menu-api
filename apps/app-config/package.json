@@ -1,0 +1,22 @@
+{
+  "name": "@menu/app-config",
+  "version": "1.0.0",
+  "description": "Menu App Config",
+  "author": "Matt Massoodi <matt@puroxy.io>",
+  "homepage": "https://github.com/ex8/menu-api#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ex8/menu-api.git"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "lint": "tslint src/**/*.ts",
+    "compile": "tsc",
+    "build": "npm run clean && npm run lint && npm run compile"
+  },
+  "bugs": {
+    "url": "https://github.com/ex8/menu-api/issues"
+  }
+}
